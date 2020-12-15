@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "518459059111",
+    "firebase_url": "https://thiaonaidee.firebaseio.com",
+    "project_id": "thiaonaidee",
+    "storage_bucket": "thiaonaidee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518459059111:android:5469efb5289508f6b7a482",
+        "android_client_info": {
+          "package_name": "com.example.ThiaoNaiDee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518459059111-p5eba5prq6f3iu4u051im5nk913gt1ab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9B-xUGUhkXWYbUlZvVO7Rm2yjckw_8dI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518459059111-p5eba5prq6f3iu4u051im5nk913gt1ab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
