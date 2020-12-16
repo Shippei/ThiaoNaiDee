@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-// ignore: must_be_immutable
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
+
 class LoginPage extends StatelessWidget {
   final Color secondaryColor = Color(0xff232c51);
   final TextEditingController nameController = TextEditingController();
@@ -80,9 +84,7 @@ class LoginPage extends StatelessWidget {
                 elevation: 0,
                 minWidth: double.maxFinite,
                 height: 50,
-                onPressed: () {
-                  //Here goes the logic for Google SignIn discussed in the next section
-                },
+                onPressed: _signInWithGoogle,
                 color: Colors.blue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -124,5 +126,15 @@ class LoginPage extends StatelessWidget {
             border: InputBorder.none),
       ),
     );
+  }
+
+  _signInWithGoogle() async {
+    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+    final FirebaseUser user =
+        (await firebaseAuth.signInWithCredential(credential)).user;
   }
 }
