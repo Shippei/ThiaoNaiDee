@@ -79,7 +79,6 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
               MaterialButton(
                 elevation: 0,
                 minWidth: double.maxFinite,

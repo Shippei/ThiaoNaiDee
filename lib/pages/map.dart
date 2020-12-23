@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
 
-class FaveritePage extends StatefulWidget {
+class MapPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _FaveriteState();
+    return _MapState();
   }
 }
 
-class _FaveriteState extends State<FaveritePage> {
+class _MapState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _FaveriteState extends State<FaveritePage> {
                 borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(50),
             )),
-            title: Text('สถานที่โปรด'),
+            title: Text('แผนที่'),
             automaticallyImplyLeading: false,
             backgroundColor: Colors.cyan[200],
             centerTitle: true,

@@ -8,6 +8,7 @@ import 'package:ThiaoNaiDee/pages/register.dart';
 import 'package:ThiaoNaiDee/pages/social.dart';
 import 'package:ThiaoNaiDee/pages/trip.dart';
 import 'package:ThiaoNaiDee/pages/user.dart';
+import 'package:ThiaoNaiDee/pages/map.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/faverite-page': (context) => FaveritePage(),
         '/login-page': (context) => LoginPage(),
         '/fast-page': (context) => FastPage(),
+        '/map-page': (context) => MapPage(),
       },
     );
   }
