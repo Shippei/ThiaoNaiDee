@@ -1,6 +1,8 @@
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,7 +28,20 @@ class _HomeState extends State<HomePage> {
             backgroundColor: Colors.cyan[200],
             centerTitle: true,
           )),
-      body: Container(),
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              Text('Home'),
+              RaisedButton(
+                onPressed: () {
+                  context.read<Authentication>().signOut();
+                },
+              )
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }

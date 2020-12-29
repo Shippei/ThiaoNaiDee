@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
+import 'package:provider/provider.dart';
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class LoginPage extends StatelessWidget {
   final Color secondaryColor = Color(0xff232c51);
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  // ignore: unused_field
+
   String message;
 
   @override
@@ -28,14 +30,47 @@ class LoginPage extends StatelessWidget {
                 width: 200,
               ),
               SizedBox(
-                height: 30,
+                height: 15,
               ),
-              _buildTextField(
-                  nameController, Icons.account_circle, 'บัญชีผู้ใช้', false),
-              SizedBox(
-                height: 20,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                    color: secondaryColor,
+                    border: Border.all(color: Colors.blue)),
+                child: TextField(
+                  controller: emailController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      labelText: 'บัญชีผู้ใช้',
+                      labelStyle: TextStyle(color: Colors.white),
+                      icon: Icon(
+                        Icons.account_circle,
+                        color: Colors.white,
+                      ),
+                      border: InputBorder.none),
+                ),
               ),
-              _buildTextField(passwordController, Icons.lock, 'รหัสผ่าน', true),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                    color: secondaryColor,
+                    border: Border.all(color: Colors.blue)),
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      labelText: 'รหัสผ่าน',
+                      labelStyle: TextStyle(color: Colors.white),
+                      icon: Icon(
+                        Icons.lock,
+                        color: Colors.white,
+                      ),
+                      border: InputBorder.none),
+                ),
+              ),
               SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 60, 0),
@@ -45,7 +80,10 @@ class LoginPage extends StatelessWidget {
                     OutlineButton(
                       child: Text('เข้าสู่ระบบ'),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/home-page');
+                        context.read<Authentication>().signIn(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
                       },
                     )
                   ],
@@ -121,7 +159,6 @@ class LoginPage extends StatelessWidget {
               icon,
               color: Colors.white,
             ),
-            // prefix: Icon(icon),
             border: InputBorder.none),
       ),
     );
