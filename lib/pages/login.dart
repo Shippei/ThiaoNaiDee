@@ -51,6 +51,9 @@ class LoginPage extends StatelessWidget {
                       border: InputBorder.none),
                 ),
               ),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
@@ -137,29 +140,6 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  _buildTextField(TextEditingController controller, IconData icon,
-      String labelText, bool a) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-          color: secondaryColor, border: Border.all(color: Colors.blue)),
-      child: TextField(
-        controller: controller,
-        obscureText: a,
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            labelText: labelText,
-            labelStyle: TextStyle(color: Colors.white),
-            icon: Icon(
-              icon,
-              color: Colors.white,
-            ),
-            border: InputBorder.none),
       ),
     );
   }
