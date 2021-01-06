@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -9,6 +14,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +33,7 @@ class _RegisterState extends State<RegisterPage> {
               child: TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(labelText: 'บัญชีผู้ใช้'),
+                controller: emailController,
               ),
             ),
             Padding(
@@ -33,6 +41,7 @@ class _RegisterState extends State<RegisterPage> {
               child: TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(labelText: 'รหัสผ่าน'),
+                controller: passwordController,
               ),
             ),
             Padding(
@@ -64,7 +73,11 @@ class _RegisterState extends State<RegisterPage> {
                   OutlineButton(
                     child: Text('ยืนยัน'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login-page');
+                      context.read<Authentication>().signUp(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          );
+                      Navigator.pushNamed(context, '/aut-page');
                     },
                   )
                 ],

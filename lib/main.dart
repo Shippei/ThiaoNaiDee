@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
           '/login-page': (context) => LoginPage(),
           '/fast-page': (context) => FastPage(),
           '/map-page': (context) => MapPage(),
+          '/aut-page': (context) => AuthenticationWrapper(),
         },
       ),
     );

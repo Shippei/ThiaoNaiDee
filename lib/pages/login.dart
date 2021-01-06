@@ -6,13 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:provider/provider.dart';
 
-final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
-
 class LoginPage extends StatelessWidget {
   final Color secondaryColor = Color(0xff232c51);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   String message;
 
@@ -86,7 +85,10 @@ class LoginPage extends StatelessWidget {
                         context.read<Authentication>().signIn(
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
+                              //email: 'test@gmail.com',
+                              //password: '123456',
                             );
+                        //Navigator.pushNamed(context, '/home-page');
                       },
                     )
                   ],

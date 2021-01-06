@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
-
+import 'package:ThiaoNaiDee/pages/authentication.dart';
+import 'package:provider/provider.dart';
 class UserPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +27,20 @@ class _UserState extends State<UserPage> {
             backgroundColor: Colors.cyan[200],
             centerTitle: true,
           )),
-      body: Container(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: () {
+                context.read<Authentication>().signOut();
+                Navigator.pushNamed(context, '/aut-page');
+              },
+              child: Text("Sign out"),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
