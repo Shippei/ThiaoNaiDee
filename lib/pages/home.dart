@@ -28,18 +28,17 @@ class _HomeState extends State<HomePage> {
             backgroundColor: Colors.cyan[200],
             centerTitle: true,
           )),
-      body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              Text('Home'),
-              RaisedButton(
-                onPressed: () {
-                  context.read<Authentication>().signOut();
-                },
-              )
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: () {
+                context.read<Authentication>().addData(email:'a@gmail.com',name1:'a',name2:'a',phone1:'084564');
+              },
+              child: Text("AddData_TEST"),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: MyBottomNavBar(),

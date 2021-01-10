@@ -85,10 +85,7 @@ class LoginPage extends StatelessWidget {
                         context.read<Authentication>().signIn(
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
-                              //email: 'test@gmail.com',
-                              //password: '123456',
                             );
-                        //Navigator.pushNamed(context, '/home-page');
                       },
                     )
                   ],
