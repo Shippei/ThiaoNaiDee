@@ -3,6 +3,7 @@ import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -34,7 +35,11 @@ class _HomeState extends State<HomePage> {
           children: [
             RaisedButton(
               onPressed: () {
-                context.read<Authentication>().addData(email:'a@gmail.com',name1:'a',name2:'a',phone1:'084564');
+                context.read<Authentication>().addData(
+                    email: 'a@gmail.com',
+                    name1: 'a',
+                    name2: 'a',
+                    phone1: '084564');
               },
               child: Text("AddData_TEST"),
             ),
