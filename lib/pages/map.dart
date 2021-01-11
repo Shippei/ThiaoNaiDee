@@ -1,55 +1,29 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
 import 'dart:async';
-
-import 'package:ThiaoNaiDee/assist/method.dart';
-import 'package:ThiaoNaiDee/assist/requset.dart';
-import 'package:ThiaoNaiDee/configmap.dart';
-import 'package:ThiaoNaiDee/datahandle/appdata.dart';
-import 'package:ThiaoNaiDee/model/address.dart';
+import 'dart:typed_data';
+import 'package:ThiaoNaiDee/main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-//import 'package:progress_dialog/progress_dialog.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
+
+void main() => runApp(MyApp());
 
 class MapPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MapState();
-  }
+  _MapState createState() => _MapState();
 }
 
 class _MapState extends State<MapPage> {
   GoogleMapController _controller;
   Position position;
   Widget _child;
-  List<LatLng> pLineCoordinates = [];
-  Set<Polyline> poLylineSet = {};
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: AppBar(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(50),
-            )),
-            title: Text('แผนที่'),
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.cyan[200],
-            centerTitle: true,
-          )),
-      body: _child,
-      bottomNavigationBar: MyBottomNavBar(),
-    );
-  }
+  List<Marker> myMarker = [];
+  double lat1, lan1, lat2, lng2;
+  //Location location = Location();
 
   Future<void> getLocation() async {
     PermissionStatus permission = await PermissionHandler()
@@ -59,6 +33,7 @@ class _MapState extends State<MapPage> {
       await PermissionHandler()
           .requestPermissions([PermissionGroup.locationAlways]);
     }
+
     var geolocator = Geolocator();
 
     GeolocationStatus geolocationStatus =
@@ -83,21 +58,11 @@ class _MapState extends State<MapPage> {
     }
   }
 
-  void _setStyle(GoogleMapController controller) async {
-    String value = await DefaultAssetBundle.of(context)
-        .loadString('assets/map_style.json');
-    controller.setMapStyle(value);
-  }
-
-  Set<Marker> _createMarker() {
-    return <Marker>[
-      Marker(
-          markerId: MarkerId('home'),
-          position: LatLng(position.latitude, position.longitude),
-          icon: BitmapDescriptor.defaultMarker,
-          infoWindow: InfoWindow(title: 'Current Location'))
-    ].toSet();
-  }
+  // void _setStyle(GoogleMapController controller) async {
+  //   String value = await DefaultAssetBundle.of(context)
+  //       .loadString('assets/map_style.json');
+  //   controller.setMapStyle(value);
+  // }
 
   void showToast(message) {
     Fluttertoast.showToast(
@@ -128,98 +93,59 @@ class _MapState extends State<MapPage> {
     return GoogleMap(
       mapType: MapType.normal,
       markers: _createMarker(),
+      // markers: Set.from(myMarker),
+      onTap: _handleTap,
       initialCameraPosition: CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 12.0,
       ),
+
       onMapCreated: (GoogleMapController controller) {
         _controller = controller;
-        _setStyle(controller);
+        // _setStyle(controller);
       },
     );
   }
 
-  // void findPlace(String placeName) async {
-  //   if (placeName.length > 1) {
-  //     String autoCompleteUrl =
-  //         "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=1234567890";
-  //     var res = await RequestAss.getRequest(autoCompleteUrl);
+  _handleTap(LatLng tappedPoint) {
+    print(tappedPoint);
+    setState(() {
+      myMarker = [];
+      myMarker.add(Marker(
+        markerId: MarkerId(tappedPoint.toString()),
+        position: tappedPoint,
+      ));
+    });
+  }
 
-  //     if (res == "failed") {
-  //       return;
-  //     }
-  //     print("Place Res");
-  //     print(res);
-  //   }
-  // }
+  Set<Marker> _createMarker() {
+    return <Marker>[
+      Marker(
+          markerId: MarkerId('home'),
+          position: LatLng(position.latitude, position.longitude),
+          icon: BitmapDescriptor.defaultMarker,
+          infoWindow: InfoWindow(title: 'Current Location'))
+    ].toSet();
+  }
 
-  // void getPlaceDetail(String placeId, context) async {
-  //   String placeDetailUrl =
-  //       "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
-  //   var res = await RequestAss.getRequest(placeDetailUrl);
-
-  //   Navigator.pop(context);
-
-  //   if (res == "failed") {
-  //     return;
-  //   }
-  //   if (res["status"] == "OK") {
-  //     Address address = Address();
-  //     address.placeName = res["result"]["name"];
-  //     address.placeId = placeId;
-  //     address.latitude = res["result"]["geometry"]["location"]["lat"];
-  //     address.longitude = res["result"]["geometry"]["location"]["lng"];
-
-  //     Provider.of<AppData>(context, listen: false)
-  //         .updateDropOffLocationAddress(address);
-  //     print("Drop: ");
-  //     print(address.placeName);
-
-  //     Navigator.pop(context, "obtainDirection");
-  //   }
-  // }
-
-  // void getPlaceDirection() async {
-  //   var initialPos = Provider.of(context, listen: false).pickUpLocation;
-  //   var finalPos = Provider.of(context, listen: false).dropOffLocation;
-
-  //   var pickUpLatLng = LatLng(initialPos.latitude, initialPos.longitude);
-  //   var dropOffLatLng = LatLng(finalPos.latitude, finalPos.longitude);
-
-  //   var details =
-  //       await AssistMethods.obtainPlaceDirection(pickUpLatLng, dropOffLatLng);
-
-  //   Navigator.pop(context);
-  //   print(details.encodedPoints);
-
-  //   PolylinePoints polylinePoints = PolylinePoints();
-  //   List<PointLatLng> decodedPolyLinePointsResult =
-  //       polylinePoints.decodePolyline(details.encodedPoints);
-
-  //   pLineCoordinates.clear();
-
-  //   if (decodedPolyLinePointsResult.isEmpty) {
-  //     decodedPolyLinePointsResult.forEach((PointLatLng pointLatLag) {
-  //       pLineCoordinates
-  //           .add(LatLng(pointLatLag.latitude, pointLatLag.longitude));
-  //     });
-  //   }
-
-  //   poLylineSet.clear();
-
-  //   setState(() {
-  //     Polyline polyline = Polyline(
-  //       color: Colors.red,
-  //       polylineId: PolylineId("PolylineID"),
-  //       jointType: JointType.round,
-  //       points: pLineCoordinates,
-  //       width: 5,
-  //       startCap: Cap.roundCap,
-  //       endCap: Cap.roundCap,
-  //       geodesic: true,
-  //     );
-
-  //     poLylineSet.add(polyline);
-  //   });
-  // }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(80),
+          child: AppBar(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(50),
+            )),
+            title: Text('แผนที่'),
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.cyan[200],
+            centerTitle: true,
+          )),
+      body: _child,
+      bottomNavigationBar: MyBottomNavBar(),
+    );
+  }
 }
