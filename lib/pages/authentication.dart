@@ -32,7 +32,12 @@ class Authentication {
     }
   }
 
-  Future<String> addData({String email, String name1, String name2, String phone1}) async {
+  Future<void> resetpass({String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<String> addData(
+      {String email, String name1, String name2, String phone1}) async {
     try {
       await FirebaseFirestore.instance
           .collection('User')

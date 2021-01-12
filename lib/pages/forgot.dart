@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPage extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class ForgotPage extends StatefulWidget {
 }
 
 class _ForgotState extends State<ForgotPage> {
+  TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +29,7 @@ class _ForgotState extends State<ForgotPage> {
               child: TextField(
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(labelText: 'บัญชีผู้ใช้'),
+                controller: emailController,
               ),
             ),
             Padding(
@@ -36,7 +40,10 @@ class _ForgotState extends State<ForgotPage> {
                   OutlineButton(
                     child: Text('ยืนยัน'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/login-page');
+                      context.read<Authentication>().resetpass(
+                            email: emailController.text.trim(),
+                          );
+                      Navigator.pushNamed(context, '/aut-page');
                     },
                   )
                 ],
