@@ -24,10 +24,17 @@ class Authentication {
     }
   }
 
-  Future<String> signUp({String email, String password}) async {
+  Future<String> signUp(
+      {String email,
+      String password,
+      String name1,
+      String name2,
+      String phone1}) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      addDataFirst(email: email, name1: name1, name2: name2, phone1: phone1);
       return "Signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;
@@ -38,9 +45,9 @@ class Authentication {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> addData(
-      {String email, String name1, String name2, String phone1}) {
-    users
+  Future<void> addDataFirst(
+      {String email, String name1, String name2, String phone1}) async {
+    await users
         .doc(email)
         .set({'firstname': name1, 'lastname': name2, 'phone': phone1})
         .then((value) => print("Added"))

@@ -16,6 +16,9 @@ class RegisterPage extends StatefulWidget {
 class _RegisterState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController name1Controller = TextEditingController();
+  TextEditingController name2Controller = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +48,30 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
+              child: TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(labelText: 'ชื่อ'),
+                controller: name1Controller,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
+              child: TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(labelText: 'นามสกุล'),
+                controller: name2Controller,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
+              child: TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(labelText: 'เบอร์โทร'),
+                controller: phoneController,
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.fromLTRB(0, 50, 60, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -55,6 +82,9 @@ class _RegisterState extends State<RegisterPage> {
                       context.read<Authentication>().signUp(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
+                            name1: name1Controller.text.trim(),
+                            name2: name2Controller.text.trim(),
+                            phone1: phoneController.text.trim(),
                           );
                       Navigator.pushNamed(context, '/aut-page');
                     },

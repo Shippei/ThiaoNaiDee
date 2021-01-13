@@ -35,7 +35,7 @@ class _HomeState extends State<HomePage> {
           children: [
             RaisedButton(
               onPressed: () {
-                context.read<Authentication>().addData(
+                context.read<Authentication>().addDataFirst(
                     email: 'a@gmail.com',
                     name1: 'a',
                     name2: 'a',
