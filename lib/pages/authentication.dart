@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Authentication {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('User');
   Authentication(this._firebaseAuth);
 
   Stream<User> get authStateChanges => _firebaseAuth.idTokenChanges();
@@ -36,16 +38,12 @@ class Authentication {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<String> addData(
-      {String email, String name1, String name2, String phone1}) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('User')
-          .doc(email)
-          .set({'firstname': name1, 'lastname': name2, 'phone': phone1});
-      return "add";
-    } on FirebaseAuthException catch (e) {
-      return e.message;
-    }
+  Future<void> addData(
+      {String email, String name1, String name2, String phone1}) {
+    users
+        .doc(email)
+        .set({'firstname': name1, 'lastname': name2, 'phone': phone1})
+        .then((value) => print("Added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 }

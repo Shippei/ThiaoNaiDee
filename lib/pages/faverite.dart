@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FaveritePage extends StatefulWidget {
   @override
@@ -26,7 +28,24 @@ class _FaveriteState extends State<FaveritePage> {
             backgroundColor: Colors.cyan[200],
             centerTitle: true,
           )),
-      body: Container(),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('data').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView(
+            children: snapshot.data.docs.map((document) {
+              return Container(
+                child: Center(child: Text(document['text'])),
+              );
+            }).toList(),
+          );
+        },
+      ),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
