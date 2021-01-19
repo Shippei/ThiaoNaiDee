@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
 
 class FaveritePage extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class FaveritePage extends StatefulWidget {
 }
 
 class _FaveriteState extends State<FaveritePage> {
+  //String email = 'a@mail.com';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,11 @@ class _FaveriteState extends State<FaveritePage> {
             centerTitle: true,
           )),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('data').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('User')
+            .doc('a@mail.com')
+            .collection('faverite')
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -40,7 +46,7 @@ class _FaveriteState extends State<FaveritePage> {
           return ListView(
             children: snapshot.data.docs.map((document) {
               return Container(
-                child: Center(child: Text(document['text'])),
+                child: Center(child: Text(document['name'])),
               );
             }).toList(),
           );

@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +12,6 @@ class LoginPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  String message;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +120,7 @@ class LoginPage extends StatelessWidget {
                 elevation: 0,
                 minWidth: double.maxFinite,
                 height: 50,
-                onPressed: _signInWithGoogle,
+                //onPressed: _signInWithGoogle,
                 color: Colors.blue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -143,13 +140,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _signInWithGoogle() async {
-    final GoogleSignInAccount googleUser = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
-    final FirebaseUser user =
-        (await firebaseAuth.signInWithCredential(credential)).user;
-  }
+  // _signInWithGoogle() async {
+  //   final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+  //   final GoogleSignInAuthentication googleAuth =
+  //       await googleUser.authentication;
+  //   final AuthCredential credential = GoogleAuthProvider.getCredential(
+  //       idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+  //   final FirebaseUser user =
+  //       (await firebaseAuth.signInWithCredential(credential)).user;
+  // }
 }
