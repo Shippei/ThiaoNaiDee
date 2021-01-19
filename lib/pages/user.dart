@@ -33,12 +33,18 @@ class _UserState extends State<UserPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
+            OutlineButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/edit-page');
+              },
+              child: Text("แก้ไขข้อมูล"),
+            ),
+            OutlineButton(
               onPressed: () {
                 context.read<Authentication>().signOut();
                 Navigator.pushNamed(context, '/aut-page');
               },
-              child: Text("Sign out"),
+              child: Text("ออกจากระบบ"),
             ),
           ],
         ),

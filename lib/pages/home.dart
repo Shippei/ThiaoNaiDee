@@ -32,20 +32,20 @@ class _HomeState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
+            OutlineButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/make-page');
               },
-              child: Text("addtrip"),
+              child: Text("เพิ่มแผน"),
             ),
-            RaisedButton(
+            OutlineButton(
               onPressed: () {
                 context.read<Authentication>().subdata(
                       email: 'a@mail.com',
                       name1: 'a',
                     );
               },
-              child: Text("Addsub_TEST"),
+              child: Text("ทดสอบเพิ่มข้อมูล"),
             ),
           ],
         ),

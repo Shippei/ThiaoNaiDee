@@ -71,6 +71,19 @@ class Authentication {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+  Future<void> editproflie(
+      {String email, String name1, String name2, String phone1}) async {
+    await users
+        .doc(email)
+        .set({
+          'firstname': name1,
+          'lastname': name2,
+          'phone': phone1,
+        })
+        .then((value) => print("Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
   Future<void> subdata({String email, String name1}) async {
     await users
         .doc(email)

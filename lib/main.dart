@@ -1,3 +1,4 @@
+import 'package:ThiaoNaiDee/pages/Editprofile.dart';
 import 'package:ThiaoNaiDee/pages/fast.dart';
 import 'package:ThiaoNaiDee/pages/faverite.dart';
 import 'package:ThiaoNaiDee/pages/forgot.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:ThiaoNaiDee/pages/Editprofile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +51,7 @@ class MyApp extends StatelessWidget {
           '/fast-page': (context) => FastPage(),
           '/map-page': (context) => MapPage(),
           '/aut-page': (context) => AuthenticationWrapper(),
+          '/edit-page': (context) => EditproPage(),
         },
       ),
     );
