@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
@@ -13,7 +12,6 @@ class FaveritePage extends StatefulWidget {
 }
 
 class _FaveriteState extends State<FaveritePage> {
-  //String email = 'a@mail.com';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +40,6 @@ class _FaveriteState extends State<FaveritePage> {
               child: CircularProgressIndicator(),
             );
           }
-
           return ListView(
             children: snapshot.data.docs.map((document) {
               return Container(

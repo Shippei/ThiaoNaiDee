@@ -120,7 +120,7 @@ class LoginPage extends StatelessWidget {
                 elevation: 0,
                 minWidth: double.maxFinite,
                 height: 50,
-                //onPressed: _signInWithGoogle,
+                onPressed: () {}, //_signInWithGoogle,
                 color: Colors.blue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -14,10 +14,6 @@ class Authentication {
 
   void newmail({String email1}) {
     this.email = email1;
-    AlertDialog(
-      content: Text(email),
-    );
-    print(email);
   }
 
   String tomail() {
@@ -65,7 +61,25 @@ class Authentication {
       {String email, String name1, String name2, String phone1}) async {
     await users
         .doc(email)
-        .set({'firstname': name1, 'lastname': name2, 'phone': phone1})
+        .set({
+          'firstname': name1,
+          'lastname': name2,
+          'phone': phone1,
+          'email': email,
+        })
+        .then((value) => print("Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> subdata({String email, String name1}) async {
+    await users
+        .doc(email)
+        .collection('faverite')
+        .doc(name1)
+        .set({
+          'name': name1,
+          'email': email,
+        })
         .then((value) => print("Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }

@@ -34,13 +34,12 @@ class _HomeState extends State<HomePage> {
           children: [
             RaisedButton(
               onPressed: () {
-                context.read<Authentication>().addDataFirst(
-                    email: 'a@gmail.com',
-                    name1: 'a',
-                    name2: 'a',
-                    phone1: '084564');
+                context.read<Authentication>().subdata(
+                      email: 'a@mail.com',
+                      name1: 'a',
+                    );
               },
-              child: Text("AddData_TEST"),
+              child: Text("Addsub_TEST"),
             ),
           ],
         ),
