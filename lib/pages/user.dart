@@ -41,8 +41,30 @@ class _UserState extends State<UserPage> {
             ),
             OutlineButton(
               onPressed: () {
-                context.read<Authentication>().signOut();
-                Navigator.pushNamed(context, '/aut-page');
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('ออกจากระบบ'),
+                        content: Text('ท่านกำลังจะออกจากระบบ'),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              context.read<Authentication>().signOut();
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/aut-page');
+                            },
+                            child: Text('ตกลง'),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('ยกเลิก'),
+                          ),
+                        ],
+                      );
+                    });
               },
               child: Text("ออกจากระบบ"),
             ),
