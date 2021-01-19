@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ThiaoNaiDee/pages/authentication.dart';
+import 'package:provider/provider.dart';
 
 class MakePage extends StatefulWidget {
   @override
@@ -9,11 +11,13 @@ class MakePage extends StatefulWidget {
 }
 
 class _MakeState extends State<MakePage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Trip'),
+        title: Text('เพิ่มแผน'),
         backgroundColor: Colors.cyan[200],
         centerTitle: true,
       ),
@@ -24,7 +28,8 @@ class _MakeState extends State<MakePage> {
               padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
               child: TextField(
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Trip Name'),
+                decoration: InputDecoration(labelText: 'ชื่อแผน'),
+                controller: nameController,
               ),
             ),
             Row(
@@ -52,7 +57,7 @@ class _MakeState extends State<MakePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Text('Add by Name'),
+                  child: Text('ค้นหาด้วยชื่อ'),
                 ),
               ],
             ),
@@ -81,7 +86,7 @@ class _MakeState extends State<MakePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: Text('Add by Faverite'),
+                  child: Text('เพิ่มจากรายการโปรด'),
                 ),
               ],
             ),
@@ -89,12 +94,13 @@ class _MakeState extends State<MakePage> {
               padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
               child: TextField(
                 textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'Time'),
+                decoration: InputDecoration(labelText: 'วันเดินทาง'),
+                controller: timeController,
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 10, 0, 0),
-              child: Text('Trip List'),
+              child: Text('รายละเอียด'),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 60, 0),
@@ -102,9 +108,14 @@ class _MakeState extends State<MakePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   OutlineButton(
-                    child: Text('Enter'),
+                    child: Text('ตกลง'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/trip-page');
+                      context.read<Authentication>().addtrip(
+                            email: 'a@mail.com',
+                            name1: nameController.text.trim(),
+                            time: timeController.text.trim(),
+                          );
+                      Navigator.pushNamed(context, '/home-page');
                     },
                   )
                 ],

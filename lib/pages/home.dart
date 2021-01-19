@@ -34,6 +34,12 @@ class _HomeState extends State<HomePage> {
           children: [
             RaisedButton(
               onPressed: () {
+                Navigator.pushNamed(context, '/make-page');
+              },
+              child: Text("addtrip"),
+            ),
+            RaisedButton(
+              onPressed: () {
                 context.read<Authentication>().subdata(
                       email: 'a@mail.com',
                       name1: 'a',

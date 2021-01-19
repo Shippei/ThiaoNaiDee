@@ -83,4 +83,18 @@ class Authentication {
         .then((value) => print("Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
+
+  Future<void> addtrip({String email, String name1, String time}) async {
+    await users
+        .doc(email)
+        .collection('trip')
+        .doc(name1)
+        .set({
+          'name': name1,
+          'email': email,
+          'time': time,
+        })
+        .then((value) => print("Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 }
