@@ -5,7 +5,9 @@ import 'package:ThiaoNaiDee/pages/forgot.dart';
 import 'package:ThiaoNaiDee/pages/home.dart';
 import 'package:ThiaoNaiDee/pages/login.dart';
 import 'package:ThiaoNaiDee/pages/make.dart';
+import 'package:ThiaoNaiDee/pages/place.dart';
 import 'package:ThiaoNaiDee/pages/register.dart';
+import 'package:ThiaoNaiDee/pages/search.dart';
 import 'package:ThiaoNaiDee/pages/social.dart';
 import 'package:ThiaoNaiDee/pages/trip.dart';
 import 'package:ThiaoNaiDee/pages/user.dart';
@@ -15,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:ThiaoNaiDee/pages/Editprofile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +53,8 @@ class MyApp extends StatelessWidget {
           '/map-page': (context) => MapPage(),
           '/aut-page': (context) => AuthenticationWrapper(),
           '/edit-page': (context) => EditproPage(),
+          '/search-page': (context) => SearchScreen(),
+          '/play-page': (context) => AboutShop(),
         },
       ),
     );

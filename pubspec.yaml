@@ -45,6 +45,7 @@ dependencies:
   progress_dialog: ^1.2.4
   js: ^0.6.2
   polyline: ^1.0.2
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

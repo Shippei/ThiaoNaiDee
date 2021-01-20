@@ -47,6 +47,12 @@ class _HomeState extends State<HomePage> {
               },
               child: Text("ทดสอบเพิ่มข้อมูล"),
             ),
+            OutlineButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/play-page');
+              },
+              child: Text("ค้นหา"),
+            ),
           ],
         ),
       ),
