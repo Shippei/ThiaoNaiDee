@@ -46,6 +46,12 @@ dependencies:
   js: ^0.6.2
   polyline: ^1.0.2
   intl: ^0.16.1
+  dio: ^3.0.10
+  auto_size_text: ^2.0.2
+  date_range_picker: ^1.0.3
+  google_place: ^0.3.3
+  geocoder: ^0.2.1
+  search_map_place: ^0.3.0
 
 dev_dependencies:
   flutter_test:

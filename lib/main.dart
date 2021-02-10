@@ -9,9 +9,11 @@ import 'package:ThiaoNaiDee/pages/place.dart';
 import 'package:ThiaoNaiDee/pages/register.dart';
 import 'package:ThiaoNaiDee/pages/search.dart';
 import 'package:ThiaoNaiDee/pages/social.dart';
+import 'package:ThiaoNaiDee/pages/test1.dart';
 import 'package:ThiaoNaiDee/pages/trip.dart';
 import 'package:ThiaoNaiDee/pages/user.dart';
 import 'package:ThiaoNaiDee/pages/map.dart';
+import 'package:ThiaoNaiDee/pages/view.dart';
 import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,6 +57,10 @@ class MyApp extends StatelessWidget {
           '/edit-page': (context) => EditproPage(),
           '/search-page': (context) => SearchScreen(),
           '/play-page': (context) => AboutShop(),
+          '/view-page': (context) => NewTripLocationView(
+                trip: null,
+              ),
+          '/test-page': (context) => TestPage(),
         },
       ),
     );

@@ -70,12 +70,18 @@ class _HomeState extends State<HomePage> {
             //   },
             //   child: Text("ทดสอบเพิ่มข้อมูล"),
             // ),
-            // OutlineButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/search-page');
-            //   },
-            //   child: Text("ค้นหา"),
-            // ),
+            OutlineButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/view-page');
+              },
+              child: Text("ค้นหา"),
+            ),
+            OutlineButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/test-page');
+              },
+              child: Text("ค้นหา2"),
+            ),
           ],
         ),
       ),
