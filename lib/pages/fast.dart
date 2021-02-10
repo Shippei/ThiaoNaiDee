@@ -35,7 +35,7 @@ class _FastState extends State<FastPage> {
                   OutlineButton(
                     child: Text('Enter'),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/trip-page');
+                      Navigator.pushNamed(context, '/home-page');
                     },
                   )
                 ],

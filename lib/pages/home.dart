@@ -34,25 +34,48 @@ class _HomeState extends State<HomePage> {
           children: [
             OutlineButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/make-page');
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('เพิ่มแผน'),
+                        content: Text('โปรดเลือกรายการของท่าน'),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/make-page');
+                            },
+                            child: Text('กำหนดเอง'),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, '/fast-page');
+                            },
+                            child: Text('จัดแบบด่วน'),
+                          ),
+                        ],
+                      );
+                    });
               },
               child: Text("เพิ่มแผน"),
             ),
-            OutlineButton(
-              onPressed: () {
-                context.read<Authentication>().subdata(
-                      email: 'a@mail.com',
-                      name1: 'a',
-                    );
-              },
-              child: Text("ทดสอบเพิ่มข้อมูล"),
-            ),
-            OutlineButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/play-page');
-              },
-              child: Text("ค้นหา"),
-            ),
+            // OutlineButton(
+            //   onPressed: () {
+            //     context.read<Authentication>().subdata(
+            //           email: 'a@mail.com',
+            //           name1: 'a',
+            //         );
+            //   },
+            //   child: Text("ทดสอบเพิ่มข้อมูล"),
+            // ),
+            // OutlineButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/search-page');
+            //   },
+            //   child: Text("ค้นหา"),
+            // ),
           ],
         ),
       ),

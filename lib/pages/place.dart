@@ -79,11 +79,11 @@ class _AboutShopState extends State<AboutShop> {
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text(userModel.address),
+            title: Text('userModel.address'),
           ),
           ListTile(
             leading: Icon(Icons.phone),
-            title: Text(userModel.phone),
+            title: Text('userModel.phone'),
           ),
           ListTile(
             leading: Icon(Icons.directions_bike),

@@ -1,4 +1,4 @@
-import 'package:ThiaoNaiDee/assist/requset.dart';
+import 'package:ThiaoNaiDee/assist/Request.dart';
 import 'package:ThiaoNaiDee/model/address.dart';
 import 'package:ThiaoNaiDee/model/placepredic.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +17,9 @@ class _SearchScreenStage extends State<SearchScreen> {
   List<PlacePredictios> placePredictionsList = [];
   @override
   Widget build(BuildContext context) {
-    String placeAddress =
-        Provider.of<AppData>(context).pickUpLocation.placeName ?? "";
+    // String placeAddress =
+    //     Provider.of<AppData>(context).pickUpLocation.placeName ?? "";
+    String placeAddress = '555';
     pickUpTextEditingController.text = placeAddress;
     return Scaffold(
       body: Column(
