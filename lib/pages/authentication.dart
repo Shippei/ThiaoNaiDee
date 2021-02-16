@@ -12,14 +12,6 @@ class Authentication {
 
   Stream<User> get authStateChanges => _firebaseAuth.idTokenChanges();
 
-  void newmail({String email1}) {
-    this.email = email1;
-  }
-
-  String tomail() {
-    return email;
-  }
-
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
@@ -28,7 +20,6 @@ class Authentication {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      newmail(email1: email);
       return "Signed in";
     } on FirebaseAuthException catch (e) {
       return e.message;
@@ -46,7 +37,6 @@ class Authentication {
           email: email, password: password);
 
       addDataFirst(email: email, name1: name1, name2: name2, phone1: phone1);
-      newmail(email1: email);
       return "Signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;

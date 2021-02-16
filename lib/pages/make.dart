@@ -1,3 +1,5 @@
+//import 'package:date_range_picker/date_range_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/authentication.dart';
@@ -13,6 +15,8 @@ class MakePage extends StatefulWidget {
 class _MakeState extends State<MakePage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  DateTime time;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,10 +96,25 @@ class _MakeState extends State<MakePage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(labelText: 'วันเดินทาง'),
-                controller: timeController,
+              child: Row(
+                children: [
+                  Text("วันเดินทาง  "),
+                  OutlineButton(
+                    child: Text(time == null ? "เลือกวัน" : time.toString()),
+                    onPressed: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2021),
+                        lastDate: DateTime(2099),
+                      ).then((date) {
+                        setState(() {
+                          time = date;
+                        });
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -110,10 +129,11 @@ class _MakeState extends State<MakePage> {
                   OutlineButton(
                     child: Text('ตกลง'),
                     onPressed: () {
+                      final User user = auth.currentUser;
                       context.read<Authentication>().addtrip(
-                            email: 'a@mail.com',
+                            email: user.email.toString(),
                             name1: nameController.text.trim(),
-                            time: timeController.text.trim(),
+                            time: time.toString(),
                           );
                       Navigator.pushNamed(context, '/home-page');
                     },

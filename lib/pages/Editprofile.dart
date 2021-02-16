@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ThiaoNaiDee/pages/authentication.dart';
@@ -11,7 +12,7 @@ class EditproPage extends StatefulWidget {
 }
 
 class _EditproState extends State<EditproPage> {
-  //TextEditingController emailController = TextEditingController();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController name1Controller = TextEditingController();
   TextEditingController name2Controller = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -59,9 +60,9 @@ class _EditproState extends State<EditproPage> {
                   OutlineButton(
                     child: Text('ยืนยัน'),
                     onPressed: () {
+                      final User user = auth.currentUser;
                       context.read<Authentication>().editproflie(
-                            //email: emailController.text.trim(),
-                            email: 'a@mail.com',
+                            email: user.email.toString(),
                             name1: name1Controller.text.trim(),
                             name2: name2Controller.text.trim(),
                             phone1: phoneController.text.trim(),
