@@ -36,18 +36,18 @@ class _MapState extends State<MapPage> {
   var geoLocator = Geolocator();
   double bottomPaddingOfMap = 400.0;
 
-  void locatePosition() async {
-    Position position2 = await geoLocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    currentPosition = position2;
-    // LatLng latlngPosition = LatLng(position2.latitude, position2.longitude);
-    // CameraPosition cameraPosition =
-    //     new CameraPosition(target: latlngPosition, zoom: 14);
-    String address = await AssistMethods.searchCoordinateAddess(position2);
-    if (address != null) {
-      print("This is your address :" + address);
-    }
-  }
+  // void locatePosition() async {
+  //   Position position2 = await geoLocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   currentPosition = position2;
+  //   // LatLng latlngPosition = LatLng(position2.latitude, position2.longitude);
+  //   // CameraPosition cameraPosition =
+  //   //     new CameraPosition(target: latlngPosition, zoom: 14);
+  //   String address = await AssistMethods.searchCoordinateAddess(position2);
+  //   if (address != null) {
+  //     print("This is your address :" + address);
+  //   }
+  // }
 
   @override
   void initState() {
@@ -107,6 +107,19 @@ class _MapState extends State<MapPage> {
         fontSize: 16.0);
   }
 
+  _handleTap(LatLng tappedPoint) {
+    print(tappedPoint);
+    setState(() {
+      myMarker = [];
+      myMarker.add(Marker(
+        markerId: MarkerId(tappedPoint.toString()),
+        position: tappedPoint,
+        icon: BitmapDescriptor.defaultMarker,
+        draggable: true,
+      ));
+    });
+  }
+
   Widget _mapWidget() {
     return GoogleMap(
       padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
@@ -116,6 +129,7 @@ class _MapState extends State<MapPage> {
       zoomGesturesEnabled: true,
       zoomControlsEnabled: true,
       //markers: _createMarker(),
+      markers: Set.from(myMarker),
       onTap: _handleTap,
       initialCameraPosition: CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -129,26 +143,15 @@ class _MapState extends State<MapPage> {
     );
   }
 
-  _handleTap(LatLng tappedPoint) {
-    print(tappedPoint);
-    setState(() {
-      myMarker = [];
-      myMarker.add(Marker(
-        markerId: MarkerId(tappedPoint.toString()),
-        position: tappedPoint,
-      ));
-    });
-  }
-
-  Set<Marker> _createMarker() {
-    return <Marker>[
-      Marker(
-          markerId: MarkerId('home'),
-          position: LatLng(position.latitude, position.longitude),
-          icon: BitmapDescriptor.defaultMarker,
-          infoWindow: InfoWindow(title: 'Current Location'))
-    ].toSet();
-  }
+  // Set<Marker> _createMarker() {
+  //   return <Marker>[
+  //     Marker(
+  //         markerId: MarkerId('home'),
+  //         position: LatLng(position.latitude, position.longitude),
+  //         icon: BitmapDescriptor.defaultMarker,
+  //         infoWindow: InfoWindow(title: 'Current Location'))
+  //   ].toSet();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +170,24 @@ class _MapState extends State<MapPage> {
             centerTitle: true,
           )),
       body: Stack(children: [
-        _child,
+        //_child,
+        GoogleMap(
+          padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
+          mapType: MapType.normal,
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
+          zoomGesturesEnabled: true,
+          zoomControlsEnabled: true,
+          markers: Set.from(myMarker),
+          onTap: _handleTap,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 12.0,
+          ),
+          onMapCreated: (GoogleMapController controller) {
+            _controller = controller;
+          },
+        ),
         // GoogleMap(
         //   padding: EdgeInsets.only(
         //     bottom: bottomPaddingOfMap,
@@ -188,131 +208,131 @@ class _MapState extends State<MapPage> {
         //     locatePosition();
         //   },
         // ),
-        Positioned(
-          left: 0.0,
-          right: 0.0,
-          bottom: 0.0,
-          child: Container(
-            height: 320.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(18.0),
-                topRight: Radius.circular(18.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 16.0,
-                  spreadRadius: 0.5,
-                  offset: Offset(0.7, 0.7),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 6.0),
-                  Text(
-                    "Hi there,",
-                    style: TextStyle(fontSize: 12.0),
-                  ),
-                  Text(
-                    "Where to?",
-                    style: TextStyle(fontSize: 20.0, fontFamily: "Brand-Bold"),
-                  ),
-                  SizedBox(height: 20.0),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black54,
-                          blurRadius: 6.0,
-                          spreadRadius: 0.5,
-                          offset: Offset(0.7, 0.7),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.search,
-                            color: Colors.blueAccent,
-                          ),
-                          SizedBox(
-                            width: 10.0,
-                          ),
-                          Text("Search Drop off")
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 24.0),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.home,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 12.0,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Add Home"),
-                          SizedBox(
-                            height: 4.0,
-                          ),
-                          Text(
-                            "Your living home address",
-                            style: TextStyle(
-                                color: Colors.black54, fontSize: 12.0),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  DividerWidget(),
-                  SizedBox(height: 16.0),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.work,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 12.0,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Add Work"),
-                          SizedBox(
-                            height: 4.0,
-                          ),
-                          Text(
-                            "Your office address",
-                            style: TextStyle(
-                                color: Colors.black54, fontSize: 12.0),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   left: 0.0,
+        //   right: 0.0,
+        //   bottom: 0.0,
+        //   child: Container(
+        //     height: 320.0,
+        //     decoration: BoxDecoration(
+        //       color: Colors.white,
+        //       borderRadius: BorderRadius.only(
+        //         topLeft: Radius.circular(18.0),
+        //         topRight: Radius.circular(18.0),
+        //       ),
+        //       boxShadow: [
+        //         BoxShadow(
+        //           color: Colors.black,
+        //           blurRadius: 16.0,
+        //           spreadRadius: 0.5,
+        //           offset: Offset(0.7, 0.7),
+        //         ),
+        //       ],
+        //     ),
+        // child: Padding(
+        //   padding:
+        //       const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       SizedBox(height: 6.0),
+        //       Text(
+        //         "Hi there,",
+        //         style: TextStyle(fontSize: 12.0),
+        //       ),
+        //       Text(
+        //         "Where to?",
+        //         style: TextStyle(fontSize: 20.0, fontFamily: "Brand-Bold"),
+        //       ),
+        //       SizedBox(height: 20.0),
+        //       Container(
+        //         decoration: BoxDecoration(
+        //           color: Colors.white,
+        //           borderRadius: BorderRadius.circular(5.0),
+        //           boxShadow: [
+        //             BoxShadow(
+        //               color: Colors.black54,
+        //               blurRadius: 6.0,
+        //               spreadRadius: 0.5,
+        //               offset: Offset(0.7, 0.7),
+        //             ),
+        //           ],
+        //         ),
+        //         child: Padding(
+        //           padding: const EdgeInsets.all(12.0),
+        //           child: Row(
+        //             children: [
+        //               Icon(
+        //                 Icons.search,
+        //                 color: Colors.blueAccent,
+        //               ),
+        //               SizedBox(
+        //                 width: 10.0,
+        //               ),
+        //               Text("Search Drop off")
+        //             ],
+        //           ),
+        //         ),
+        //       ),
+        //       SizedBox(height: 24.0),
+        //       Row(
+        //         children: [
+        //           Icon(
+        //             Icons.home,
+        //             color: Colors.grey,
+        //           ),
+        //           SizedBox(
+        //             width: 12.0,
+        //           ),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text("Add Home"),
+        //               SizedBox(
+        //                 height: 4.0,
+        //               ),
+        //               Text(
+        //                 "Your living home address",
+        //                 style: TextStyle(
+        //                     color: Colors.black54, fontSize: 12.0),
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //       SizedBox(height: 10.0),
+        //       DividerWidget(),
+        //       SizedBox(height: 16.0),
+        //       Row(
+        //         children: [
+        //           Icon(
+        //             Icons.work,
+        //             color: Colors.grey,
+        //           ),
+        //           SizedBox(
+        //             width: 12.0,
+        //           ),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text("Add Work"),
+        //               SizedBox(
+        //                 height: 4.0,
+        //               ),
+        //               Text(
+        //                 "Your office address",
+        //                 style: TextStyle(
+        //                     color: Colors.black54, fontSize: 12.0),
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        //   ),
+        // ),
       ]),
       bottomNavigationBar: MyBottomNavBar(),
     );
@@ -331,42 +351,42 @@ class _MapState extends State<MapPage> {
   //   }
   // }
 
-  // void getPlaceDetail(String placeId, context) async {
-  //   String placeDetailUrl =
-  //       "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
-  //   var res = await RequestAss.getRequest(placeDetailUrl);
-  //   Navigator.pop(context);
-  //   if (res == "failed") {
-  //     return;
-  //   }
-  //   if (res["status"] == "OK") {
-  //     Address address = Address();
-  //     address.placeName = res["result"]["name"];
-  //     address.placeId = placeId;
-  //     address.latitude = res["result"]["geometry"]["location"]["lat"];
-  //     address.longitude = res["result"]["geometry"]["location"]["lng"];
-  //     Provider.of<AppData>(context, listen: false)
-  //         .updateDropOffLocationAddress(address);
-  //     print("Drop: ");
-  //     print(address.placeName);
-  //     Navigator.pop(context, "obtainDirection");
-  //   }
-  // }
+  void getPlaceDetail(String placeId, context) async {
+    String placeDetailUrl =
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey";
+    var res = await RequestAss.getRequest(placeDetailUrl);
+    Navigator.pop(context);
+    if (res == "failed") {
+      return;
+    }
+    if (res["status"] == "OK") {
+      Address address = Address();
+      address.placeName = res["result"]["name"];
+      address.placeId = placeId;
+      address.latitude = res["result"]["geometry"]["location"]["lat"];
+      address.longitude = res["result"]["geometry"]["location"]["lng"];
+      Provider.of<AppData>(context, listen: false)
+          .updateDropOffLocationAddress(address);
+      print("Drop: ");
+      print(address.placeName);
+      Navigator.pop(context, "obtainDirection");
+    }
+  }
 
-  // Future<String> testAddress(double latitude, double longitude) async {
-  //   List<Placemark> newPlace =
-  //       await _geolocator.placemarkFromCoordinates(latitude, longitude);
-  //   Placemark placeMark = newPlace[0];
-  //   String name = placeMark.name;
-  //   // String subLocality = placeMark.subLocality;
-  //   String locality = placeMark.locality;
-  //   String administrativeArea = placeMark.administrativeArea;
-  //   // String subAdministrativeArea = placeMark.administrativeArea;
-  //   String postalCode = placeMark.postalCode;
-  //   String country = placeMark.country;
-  //   // String subThoroughfare = placeMark.subThoroughfare;
-  //   String thoroughfare = placeMark.thoroughfare;
-  //   _isoCountryCode = placeMark.isoCountryCode;
-  //   return "$name, $thoroughfare, $locality, $administrativeArea, $postalCode, $country";
-  // }
+  Future<String> testAddress(double latitude, double longitude) async {
+    List<Placemark> newPlace =
+        await _geolocator.placemarkFromCoordinates(latitude, longitude);
+    Placemark placeMark = newPlace[0];
+    String name = placeMark.name;
+    // String subLocality = placeMark.subLocality;
+    String locality = placeMark.locality;
+    String administrativeArea = placeMark.administrativeArea;
+    // String subAdministrativeArea = placeMark.administrativeArea;
+    String postalCode = placeMark.postalCode;
+    String country = placeMark.country;
+    // String subThoroughfare = placeMark.subThoroughfare;
+    String thoroughfare = placeMark.thoroughfare;
+    _isoCountryCode = placeMark.isoCountryCode;
+    return "$name, $thoroughfare, $locality, $administrativeArea, $postalCode, $country";
+  }
 }
