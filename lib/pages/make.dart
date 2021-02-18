@@ -1,4 +1,3 @@
-//import 'package:date_range_picker/date_range_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,9 @@ class _MakeState extends State<MakePage> {
                         color: Colors.cyan[200], // button color
                         child: InkWell(
                           splashColor: Colors.yellow[200], // splash color
-                          onTap: () {}, // button pressed
+                          onTap: () {
+                            Navigator.pushNamed(context, '/test-page');
+                          }, // button pressed
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -76,7 +77,9 @@ class _MakeState extends State<MakePage> {
                         color: Colors.cyan[200], // button color
                         child: InkWell(
                           splashColor: Colors.yellow[200], // splash color
-                          onTap: () {}, // button pressed
+                          onTap: () {
+                            Navigator.pushNamed(context, '/faverite-page');
+                          }, // button pressed
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

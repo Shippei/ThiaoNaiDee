@@ -61,6 +61,13 @@ class Authentication {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
+  Future<void> deletefav({
+    String email,
+    String name,
+  }) async {
+    await users.doc(email).collection('faverite').doc(name).delete();
+  }
+
   Future<void> editproflie(
       {String email, String name1, String name2, String phone1}) async {
     await users

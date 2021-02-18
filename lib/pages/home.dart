@@ -1,8 +1,6 @@
 import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
-import 'package:ThiaoNaiDee/pages/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -70,12 +68,12 @@ class _HomeState extends State<HomePage> {
             //   },
             //   child: Text("ทดสอบเพิ่มข้อมูล"),
             // ),
-            // OutlineButton(
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/view-page');
-            //   },
-            //   child: Text("ค้นหา"),
-            // ),
+            OutlineButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/view-page');
+              },
+              child: Text("ค้นหา101"),
+            ),
             OutlineButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/test-page');
