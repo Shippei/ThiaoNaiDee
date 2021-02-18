@@ -365,6 +365,7 @@ class _MapState extends State<MapPage> {
       address.placeId = placeId;
       address.latitude = res["result"]["geometry"]["location"]["lat"];
       address.longitude = res["result"]["geometry"]["location"]["lng"];
+      address.rating = res["result"]["rating"];
       Provider.of<AppData>(context, listen: false)
           .updateDropOffLocationAddress(address);
       print("Drop: ");

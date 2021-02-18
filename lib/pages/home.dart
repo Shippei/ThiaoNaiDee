@@ -59,26 +59,11 @@ class _HomeState extends State<HomePage> {
               },
               child: Text("เพิ่มแผน"),
             ),
-            // OutlineButton(
-            //   onPressed: () {
-            //     context.read<Authentication>().subdata(
-            //           email: 'a@mail.com',
-            //           name1: 'a',
-            //         );
-            //   },
-            //   child: Text("ทดสอบเพิ่มข้อมูล"),
-            // ),
-            OutlineButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/view-page');
-              },
-              child: Text("ค้นหา101"),
-            ),
             OutlineButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/test-page');
               },
-              child: Text("ค้นหา"),
+              child: Text("เพิ่มสถานที่โปรด"),
             ),
           ],
         ),

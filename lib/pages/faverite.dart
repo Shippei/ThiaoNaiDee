@@ -51,7 +51,7 @@ class _FaveriteState extends State<FaveritePage> {
                     children: [
                       SizedBox(height: 24.0),
                       ButtonTheme(
-                        minWidth: 350.0,
+                        minWidth: 200.0,
                         height: 100.0,
                         child: OutlineButton(
                           borderSide: BorderSide(

@@ -81,14 +81,14 @@ class Authentication {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future<void> subdata({String email, String name1}) async {
+  Future<void> subdata({String email, String name, String more}) async {
     await users
         .doc(email)
         .collection('faverite')
-        .doc(name1)
+        .doc(name)
         .set({
-          'name': name1,
-          'email': email,
+          'name': name,
+          'more': more,
         })
         .then((value) => print("Added"))
         .catchError((error) => print("Failed to add user: $error"));
