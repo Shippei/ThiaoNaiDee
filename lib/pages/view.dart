@@ -66,7 +66,7 @@ class _NewTripLocationViewState extends State<NewTripLocationView> {
     String type = '(regions)';
     // TODO Add session token
 
-    String request = '$baseURL?input=$input&key=$PLACES_API_KEY&type=$type';
+    String request = '$baseURL?input=$input&key=$Secrets&type=$type';
     Response response = await Dio().get(request);
 
     final predictions = response.data['predictions'];

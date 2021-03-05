@@ -8,6 +8,7 @@ import 'package:ThiaoNaiDee/pages/make.dart';
 import 'package:ThiaoNaiDee/pages/place.dart';
 import 'package:ThiaoNaiDee/pages/register.dart';
 import 'package:ThiaoNaiDee/pages/search.dart';
+import 'package:ThiaoNaiDee/pages/showtime.dart';
 import 'package:ThiaoNaiDee/pages/social.dart';
 import 'package:ThiaoNaiDee/pages/test1.dart';
 import 'package:ThiaoNaiDee/pages/trip.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
                 trip: null,
               ),
           '/test-page': (context) => TestPage(),
+          '/showtime-page': (context) => ShowtimePage(),
         },
       ),
     );

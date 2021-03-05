@@ -18,7 +18,7 @@ class _FaveriteState extends State<FaveritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: AppBar(

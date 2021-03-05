@@ -1,39 +1,42 @@
-import 'package:ThiaoNaiDee/pages/MyBottomNavBar.dart';
-import 'package:ThiaoNaiDee/pages/showtime.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class ShowtimePage extends StatefulWidget {
+  final String tripname;
+  ShowtimePage({Key key, this.tripname}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return _ShowtimeState();
   }
 }
 
-class _HomeState extends State<HomePage> {
+class _ShowtimeState extends State<ShowtimePage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: AppBar(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
+        preferredSize: Size.fromHeight(80),
+        child: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(50),
-            )),
-            title: Text('แผนการเดินทาง'),
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.cyan[200],
-            centerTitle: true,
-          )),
+            ),
+          ),
+          title: Text(widget.tripname),
+          backgroundColor: Colors.cyan[200],
+          centerTitle: true,
+        ),
+      ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('User')
             .doc(auth.currentUser.email.toString())
             .collection('trip')
+            .doc(widget.tripname)
+            .collection('A')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -54,35 +57,8 @@ class _HomeState extends State<HomePage> {
                       Text(
                           "                                                      "),
                       OutlineButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('เพิ่มแผน'),
-                                  content: Text('โปรดเลือกรายการของท่าน'),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        Navigator.pushNamed(
-                                            context, '/make-page');
-                                      },
-                                      child: Text('กำหนดเอง'),
-                                    ),
-                                    FlatButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        Navigator.pushNamed(
-                                            context, '/fast-page');
-                                      },
-                                      child: Text('อัตโนมัติ'),
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        child: Text("เพิ่มแผน"),
+                        onPressed: () {},
+                        child: Text("เพิ่มรายการ"),
                       ),
                       Text("     "),
                     ],
@@ -139,7 +115,6 @@ class _HomeState extends State<HomePage> {
           );
         },
       ),
-      bottomNavigationBar: MyBottomNavBar(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _MakeState extends State<MakePage> {
   final TextEditingController timeController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
   DateTime time;
+  Timestamp dts;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,75 +37,77 @@ class _MakeState extends State<MakePage> {
                 controller: nameController,
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 20, 10, 30),
-                  child: SizedBox.fromSize(
-                    size: Size(56, 56), // button width and height
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.cyan[200], // button color
-                        child: InkWell(
-                          splashColor: Colors.yellow[200], // splash color
-                          onTap: () {
-                            Navigator.pushNamed(context, '/test-page');
-                          }, // button pressed
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.add), // icon
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  child: Text('ค้นหาด้วยชื่อ'),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 0, 10, 30),
-                  child: SizedBox.fromSize(
-                    size: Size(56, 56), // button width and height
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.cyan[200], // button color
-                        child: InkWell(
-                          splashColor: Colors.yellow[200], // splash color
-                          onTap: () {
-                            Navigator.pushNamed(context, '/faverite-page');
-                          }, // button pressed
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.add), // icon
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: Text('เพิ่มจากรายการโปรด'),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.fromLTRB(50, 20, 10, 30),
+            //       child: SizedBox.fromSize(
+            //         size: Size(56, 56), // button width and height
+            //         child: ClipOval(
+            //           child: Material(
+            //             color: Colors.cyan[200], // button color
+            //             child: InkWell(
+            //               splashColor: Colors.yellow[200], // splash color
+            //               onTap: () {
+            //                 Navigator.pushNamed(context, '/test-page');
+            //               }, // button pressed
+            //               child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: <Widget>[
+            //                   Icon(Icons.add), // icon
+            //                 ],
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+            //       child: Text('ค้นหาด้วยชื่อ'),
+            //     ),
+            //   ],
+            // ),
+            // Row(
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.fromLTRB(50, 0, 10, 30),
+            //       child: SizedBox.fromSize(
+            //         size: Size(56, 56),
+            //         child: ClipOval(
+            //           child: Material(
+            //             color: Colors.cyan[200],
+            //             child: InkWell(
+            //               splashColor: Colors.yellow[200],
+            //               onTap: () {
+            //                 Navigator.pushNamed(context, '/faverite-page');
+            //               },
+            //               child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: <Widget>[
+            //                   Icon(Icons.add),
+            //                 ],
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+            //       child: Text('เพิ่มจากรายการโปรด'),
+            //     ),
+            //   ],
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(60, 0, 60, 10),
               child: Row(
                 children: [
                   Text("วันเดินทาง  "),
                   OutlineButton(
-                    child: Text(time == null ? "เลือกวัน" : time.toString()),
+                    child: Text(time == null
+                        ? "เลือกวัน"
+                        : time.toIso8601String().split('T').first),
                     onPressed: () {
                       showDatePicker(
                         context: context,
@@ -113,16 +117,13 @@ class _MakeState extends State<MakePage> {
                       ).then((date) {
                         setState(() {
                           time = date;
+                          dts = Timestamp.fromDate(date);
                         });
                       });
                     },
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(50, 10, 0, 0),
-              child: Text('รายละเอียด'),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 60, 0),
@@ -136,7 +137,7 @@ class _MakeState extends State<MakePage> {
                       context.read<Authentication>().addtrip(
                             email: user.email.toString(),
                             name1: nameController.text.trim(),
-                            time: time.toString(),
+                            time: dts,
                           );
                       Navigator.pushNamed(context, '/home-page');
                     },
